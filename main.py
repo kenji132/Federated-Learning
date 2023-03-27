@@ -15,17 +15,16 @@ from utils.options import args_parser
 
 if __name__ == '__main__':
     args = args_parser()
-    print(args)
-    N_CLIENTS = 20
-    numEpoch = 100
+    N_CLIENTS = args.n_clients
+    numEpoch = args.n_epoch
     local_ep = 1
-    DIRICHLET_ALPHA = 1
+    DIRICHLET_ALPHA = args.dirichlet_alpha
     ATTACK = 'mpaf'
-    mp_lambda = 10**6
-    METHOD = 'trimmed_mean'
-    trim_factor = 0.15
-    batch_size = 64
-    opt = 'Adam'
+    mp_lambda = args.mp_lambda
+    METHOD = args.method
+    trim_factor = args.trim_factor
+    batch_size = args.batch_size
+    opt = args.opt
     np.random.seed(42)
     random.seed(42)
     use_cuda = True
@@ -52,7 +51,7 @@ if __name__ == '__main__':
         w_glob = net_glob.state_dict()
 
         # fake client
-        fake_client_rate = 0.4
+        fake_client_rate = args.fake_client_rate
         fake_clients = math.floor(N_CLIENTS * fake_client_rate)
         client_num_list = list(range(0, N_CLIENTS))
         fake_client_num_list = random.sample(client_num_list, fake_clients)
